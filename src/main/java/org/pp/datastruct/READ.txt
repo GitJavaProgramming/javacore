@@ -1,0 +1,14 @@
+包中用到的Java接口
+    java.lang.Comparable<T>
+    java.util.Comparator<T>
+    java.lang.Cloneable
+    java.io.Serializable
+    java.lang.Iterable<T>
+    java.util.Iterator<E>
+    java.util.stream.Stream<T>
+    这些接口引用的接口(包括函数式)或类：......
+
+
+
+
+

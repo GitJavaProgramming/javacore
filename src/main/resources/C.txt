@@ -1,0 +1,13 @@
+参考：https://www.runoob.com/cprogramming/c-variables.html
+变量--定义与声明、作用域、存储类型、限定类型
+函数与指针
+动态内存分配
+数据结构
+宏预处理
+
+
+
+
+
+
+
