@@ -20,16 +20,23 @@ public class SocketHandler implements Runnable {
 
     @Override
     public void run() {
-        try (InputStream in = socket.getInputStream(); OutputStream out = socket.getOutputStream()) {
-            byte[] bytes = in.readAllBytes();
-            String str = new String(bytes, StandardCharsets.UTF_8);
-            System.out.println("接收数据：" + str);
-
-            str = "服务器返回：你好";
-            out.write(str.getBytes(StandardCharsets.UTF_8));
-            out.flush();
+        try {
+            process(socket.getInputStream(), socket.getOutputStream());
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void process(InputStream in, OutputStream out) throws IOException {
+        byte[] bytes = new byte[1024];
+        System.out.println(socket + "阻塞读数据...");
+        in.read(bytes);
+        String str = new String(bytes, StandardCharsets.UTF_8);
+        System.out.println("接收数据：" + str.trim());
+
+        str = "服务器返回：你好";
+        out.write(str.getBytes(StandardCharsets.UTF_8));
+        out.flush();
+        System.out.println(socket + "写数据...");
     }
 }

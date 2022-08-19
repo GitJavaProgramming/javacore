@@ -8,42 +8,36 @@ import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 
 public class Client {
+    private static final Socket socket = new Socket();
+
     public static void main(String[] args) {
-        Socket socket = new Socket();
         try {
             socket.connect(new InetSocketAddress("localhost", 8080));
+            if (socket.isConnected() && !socket.isClosed()) {
+                System.out.println("socket连接中：" + socket);
+            }
+            process(socket.getInputStream(), socket.getOutputStream());
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                socket.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-        OutputStream out = null;
-        InputStream in = null;
-        try {
-            out = socket.getOutputStream();
 
-            out.write("鹏鹏".getBytes(StandardCharsets.UTF_8));
-            out.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                socket.shutdownOutput();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        try {
-            in = socket.getInputStream();
-            byte[] bytes = in.readAllBytes();
-            String str = new String(bytes, StandardCharsets.UTF_8);
-            System.out.println(str);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                socket.shutdownInput();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+    }
+
+    static void process(InputStream in, OutputStream out) throws IOException {
+        System.out.println("向服务器发送数据...");
+        out.write("鹏鹏".getBytes(StandardCharsets.UTF_8));
+        out.flush();
+
+        byte[] bytes = new byte[1024];
+        System.out.println("阻塞读数据...");
+        in.read(bytes);
+        String str = new String(bytes, StandardCharsets.UTF_8);
+        System.out.println(str.trim());
     }
 }

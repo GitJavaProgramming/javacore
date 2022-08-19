@@ -1,0 +1,3 @@
+channel
+selector SelectionKey --- channel注册到selector并指定感兴趣的事件
+buffer --- read/write

@@ -28,8 +28,10 @@ public class SocketServer {
         public void run() {
 
             try (ServerSocket server = new ServerSocket(8080, 2)) {
+                System.out.println("等待客户端连接");
                 while (!stop) {
                     Socket client = server.accept();
+                    System.out.println("接收到客户端连接：" + client);
                     new SocketHandler(client);
                 }
             } catch (IOException e) {
