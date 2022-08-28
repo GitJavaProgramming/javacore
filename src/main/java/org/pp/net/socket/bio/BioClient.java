@@ -10,8 +10,15 @@ public class BioClient {
         Socket socket = new Socket("localhost", 9090);
 
         Scanner scanner = new Scanner(System.in);
-        String str = scanner.nextLine();
-        socket.getOutputStream().write(str.getBytes(StandardCharsets.UTF_8));
+        while (true) {
+            String str = scanner.nextLine();
+            if ("quit".equals(str)) {
+                break;
+            }
+            socket.getOutputStream().write(str.getBytes(StandardCharsets.UTF_8));
+            socket.getOutputStream().flush();
+            System.out.println("发送字节数：" + str.getBytes(StandardCharsets.UTF_8).length);
+        }
         socket.close();
     }
 }

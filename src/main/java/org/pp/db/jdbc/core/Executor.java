@@ -3,7 +3,7 @@ package org.pp.db.jdbc.core;
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
 import org.pp.db.jdbc.User;
-import org.pp.db.jdbc.registry.Registry;
+import org.pp.db.jdbc.registry.TypeHandlerRegistry;
 import org.pp.db.jdbc.typehandler.TypeHandler;
 
 import java.sql.*;
@@ -35,7 +35,7 @@ public class Executor {
                 for (int index = 1; index <= columnCount; index++) {
                     String columnName = metaData.getColumnName(index);
                     Class<?> clazz = classLoader.loadClass(metaData.getColumnClassName(index));
-                    TypeHandler typeHandler = Registry.getTypeHandler(clazz);
+                    TypeHandler typeHandler = TypeHandlerRegistry.getTypeHandler(clazz);
                     Object obj = typeHandler.getValue(resultSet, index);
                     json.putIfAbsent(columnName, obj);
                 }
