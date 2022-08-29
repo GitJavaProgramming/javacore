@@ -1,4 +1,6 @@
-package org.pp.net.rpc.reactor.core;
+package org.pp.net.rpc.registrationcenter;
+
+import org.pp.net.rpc.reactor.core.SelectorWrapper;
 
 import java.io.IOException;
 import java.nio.channels.ServerSocketChannel;
@@ -11,6 +13,9 @@ public class Acceptor implements Runnable {
     private final SelectorWrapper selectorWrapper;
     private final ExecutorService boss;
     private final ExecutorService service;
+    private SocketChannel socketChannel;
+
+    private AcceptorHandler acceptorHandler;
 
     public Acceptor(ServerSocketChannel serverSocketChannel, SelectorWrapper selectorWrapper, ExecutorService boss, ExecutorService service) {
         this.serverSocketChannel = serverSocketChannel;
@@ -21,9 +26,9 @@ public class Acceptor implements Runnable {
 
     public void startup() {
         try {
-            SocketChannel socketChannel = serverSocketChannel.accept();
+            socketChannel = serverSocketChannel.accept();
             System.out.println(socketChannel + "新客户端连接...");
-            boss.submit(new AcceptorHandler(socketChannel, selectorWrapper, service));
+            boss.submit(acceptorHandler);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -32,5 +37,12 @@ public class Acceptor implements Runnable {
     @Override
     public void run() {
         startup();
+    }
+
+    public void setHandler(AcceptorHandler acceptorHandler) {
+        this.acceptorHandler = acceptorHandler;
+        acceptorHandler.setSocketChannel(socketChannel);
+        acceptorHandler.setSelectorWrapper(selectorWrapper);
+        acceptorHandler.setService(service);
     }
 }

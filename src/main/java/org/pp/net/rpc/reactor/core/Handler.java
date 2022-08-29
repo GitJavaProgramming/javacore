@@ -1,13 +1,13 @@
 package org.pp.net.rpc.reactor.core;
 
 
-import java.util.concurrent.Future;
-
 public interface Handler extends Runnable {
 
-    void send();
+    default public void connectCloseException() {
+        System.out.println("连接关闭时异常...");
+    }
 
-    Future read();
-
-    void connectCloseException();
+    default public void conectionException() {
+        System.out.println("连接异常...");
+    }
 }

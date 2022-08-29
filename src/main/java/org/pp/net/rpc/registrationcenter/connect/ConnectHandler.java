@@ -1,25 +1,25 @@
-package org.pp.net.rpc.reactor.core;
+package org.pp.net.rpc.registrationcenter.connect;
 
+import org.pp.net.rpc.reactor.core.AbstractIOHandler;
 import org.pp.net.rpc.reactor.event.ConnectionClosedEvent;
 import org.pp.net.rpc.reactor.listener.ConnectListener;
-import org.pp.net.rpc.reactor.listener.Listener;
+import org.pp.net.rpc.registrationcenter.AcceptorHandler;
+import org.pp.net.rpc.registry.MethodWrapper;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.SocketChannel;
-import java.nio.charset.StandardCharsets;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 
-public class IOHandler extends AbstractIOHandler {
+public class ConnectHandler extends AbstractIOHandler {
 
-    private SocketChannel channel;
-    private ExecutorService service;
-    private SelectionKey key;
-    private Listener listener;
+    public ConnectHandler(AcceptorHandler acceptorHandler) {
+        this.acceptorHandler = acceptorHandler;
+    }
 
-    public IOHandler(SocketChannel channel, SelectionKey key, ExecutorService service) {
+    public ConnectHandler(SocketChannel channel, SelectionKey key, ExecutorService service) {
         this.channel = channel;
         this.key = key;
         this.service = service;
@@ -43,31 +43,19 @@ public class IOHandler extends AbstractIOHandler {
                     len = channel.read(input);
                 } catch (IOException e) {
                     // 当客户端主动连接断开时，为了让服务器知道断开了连接，会产生OP_READ事件。
-                    listener.onConnectionException(new ConnectionClosedEvent(), e);
+                    listener.onConnectionException(new ConnectionClosedEvent(this), e);
                 }
                 StringBuilder sb = new StringBuilder();
                 // 有len个可用字节 read可能返回0 读取字节数可能超过input容量
                 if (len > 0) {
-//                        channel.supportedOptions().forEach(System.out::println);
-                    /**
-                     * SO_OOBINLINE
-                     * SO_KEEPALIVE
-                     * SO_REUSEADDR
-                     * SO_SNDBUF
-                     * SO_LINGER
-                     * TCP_NODELAY
-                     * IP_TOS
-                     * SO_RCVBUF
-                     */
                     input.flip();
                     byte[] bytes = new byte[input.remaining()];
                     input.get(bytes);
-                    String str = new String(bytes, StandardCharsets.UTF_8);
-                    sb.append(str);
-                    System.out.println("读取数据：" + sb);
+                    // 将字节数组转换成java对象
+                    MethodWrapper wrapper = new MethodWrapper();
                 }
                 if (len == -1) { // 当客户端主动连接断开时，为了让服务器知道断开了连接，会产生OP_READ事件。所以需要判断读取长度，当读到-1时，关闭channel。
-                    listener.onConnectionClosed(new ConnectionClosedEvent());
+                    listener.onConnectionClosed(new ConnectionClosedEvent(this));
                     return;
                 }
             } else {
@@ -75,9 +63,5 @@ public class IOHandler extends AbstractIOHandler {
             }
         });
         return future;
-    }
-
-    public Listener getListener() {
-        return listener;
     }
 }

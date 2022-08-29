@@ -1,5 +1,8 @@
 package org.pp.net.rpc.reactor.core;
 
+import org.pp.net.rpc.registrationcenter.Acceptor;
+import org.pp.net.rpc.registrationcenter.AcceptorHandler;
+
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.channels.SelectionKey;
@@ -12,14 +15,17 @@ import java.util.concurrent.Executors;
 
 public class Bootstrap {
 
-    private static final ExecutorService bossExecutor = Executors.newSingleThreadExecutor();
     private static final int N_CPU = Runtime.getRuntime().availableProcessors();
-    private static final ExecutorService workExecutor = Executors.newFixedThreadPool(N_CPU);
+    private ExecutorService bossExecutor = Executors.newSingleThreadExecutor();
+    private ExecutorService workExecutor = Executors.newFixedThreadPool(N_CPU);
 
     private SelectorWrapper selectorWrapper;
     private Selector[] selectors;
     private Selector mainSelector;
     private ServerSocketChannel serverSocketChannel;
+
+    private Acceptor acceptor;
+    private AcceptorHandler handler;
 
     public Bootstrap() {
         try {
@@ -37,19 +43,18 @@ public class Bootstrap {
         try {
             serverSocketChannel.bind(new InetSocketAddress(port), 1024);
             System.out.println("服务器监听中...");
+            serverSocketChannel.register(mainSelector, SelectionKey.OP_ACCEPT, acceptor);
+            poll(); // 轮询selector
         } catch (IOException e) {
             e.printStackTrace();
         }
         return this;
     }
 
-    public void init() throws IOException {
-
+    public Bootstrap initAcceptor() throws IOException {
         Acceptor acceptor = new Acceptor(serverSocketChannel, selectorWrapper, bossExecutor, workExecutor);
-
-        serverSocketChannel.register(mainSelector, SelectionKey.OP_ACCEPT, acceptor);
-
-        poll(); // 轮询selector
+        acceptor.setHandler(handler);
+        return this;
     }
 
     private void poll() throws IOException {
@@ -82,5 +87,40 @@ public class Bootstrap {
     private SelectorWrapper configSelector(int count) {
         SelectorWrapper selectorWrapper = SelectorWrapper.getInstance(count);
         return selectorWrapper;
+    }
+
+    public Bootstrap setHandler(AcceptorHandler handler) {
+        this.handler = handler;
+        return this;
+    }
+
+    public Acceptor getAcceptor() {
+        return acceptor;
+    }
+
+    public SelectorWrapper getSelectorWrapper() {
+        return selectorWrapper;
+    }
+
+    public ServerSocketChannel getServerSocketChannel() {
+        return serverSocketChannel;
+    }
+
+    public ExecutorService getBoss() {
+        return bossExecutor;
+    }
+
+    public ExecutorService getWorker() {
+        return workExecutor;
+    }
+
+    public Bootstrap boos(ExecutorService boss) {
+        this.bossExecutor = boss;
+        return this;
+    }
+
+    public Bootstrap worker(ExecutorService workExecutor) {
+        this.workExecutor = workExecutor;
+        return this;
     }
 }

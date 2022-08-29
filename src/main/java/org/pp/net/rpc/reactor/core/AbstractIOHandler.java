@@ -1,12 +1,26 @@
 package org.pp.net.rpc.reactor.core;
 
+import org.pp.net.rpc.reactor.listener.Listener;
+import org.pp.net.rpc.registrationcenter.AcceptorHandler;
+
 import java.nio.ByteBuffer;
+import java.nio.channels.SelectionKey;
+import java.nio.channels.SocketChannel;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Future;
 
 public abstract class AbstractIOHandler implements Handler {
     protected static final int READING = 0, SENDING = 1;
     protected final ByteBuffer input = ByteBuffer.allocate(1024);
     protected final ByteBuffer output = ByteBuffer.allocate(1024);
     protected int state = READING;
+
+    protected SocketChannel channel;
+    protected ExecutorService service;
+    protected SelectionKey key;
+    protected Listener listener;
+
+    protected AcceptorHandler acceptorHandler;
 
     public AbstractIOHandler() {
     }
@@ -20,12 +34,7 @@ public abstract class AbstractIOHandler implements Handler {
         }
     }
 
-    @Override
-    public void connectCloseException() {
-        System.out.println("连接关闭时异常...");
-    }
+    public abstract void send();
 
-    public void conectionException() {
-        System.out.println("连接异常...");
-    }
+    public abstract Future read();
 }
