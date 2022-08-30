@@ -19,12 +19,13 @@ public class RpcServer {
         try {
             bootstrap.boos(bossExecutor)
                     .worker(workExecutor)
-                    .setHandler(new AcceptorHandler(bootstrap.getAcceptor()) {
+                    .initAcceptor(new AcceptorHandler() {
                         @Override
                         public void setHandler() {
-                            setIOHandler(/*与注册中心不同IOHandler，这里没实现使用同一个*/new ConnectHandler(this));
+                            setIOHandler(/*与注册中心不同IOHandler，这里没实现使用同一个*/new ConnectHandler());
                         }
-                    }).initAcceptor().bind(port);
+                    })
+                    .bind(port);
         } catch (IOException e) {
             System.out.println("异常：" + e.getMessage());
         }

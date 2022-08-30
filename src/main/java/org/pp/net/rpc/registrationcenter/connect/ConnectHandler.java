@@ -5,18 +5,21 @@ import org.pp.net.rpc.reactor.event.ConnectionClosedEvent;
 import org.pp.net.rpc.reactor.listener.ConnectListener;
 import org.pp.net.rpc.registrationcenter.AcceptorHandler;
 import org.pp.net.rpc.registry.MethodWrapper;
+import org.pp.net.rpc.utils.ConvertUtils;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.SocketChannel;
+import java.util.Arrays;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 
 public class ConnectHandler extends AbstractIOHandler {
 
-    public ConnectHandler(AcceptorHandler acceptorHandler) {
-        this.acceptorHandler = acceptorHandler;
+    public ConnectHandler() {
     }
 
     public ConnectHandler(SocketChannel channel, SelectionKey key, ExecutorService service) {
@@ -51,8 +54,21 @@ public class ConnectHandler extends AbstractIOHandler {
                     input.flip();
                     byte[] bytes = new byte[input.remaining()];
                     input.get(bytes);
+                    // 取出协议头 设置的报文length
+                    byte[] wrapIntArr = new byte[4];
+                    Arrays.copyOfRange(wrapIntArr, 0, 4);
+                    int length = ConvertUtils.byteArrayToInt(wrapIntArr);
                     // 将字节数组转换成java对象
-                    MethodWrapper wrapper = new MethodWrapper();
+                    ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(bytes, 4, bytes.length);
+                    try {
+                        ObjectInputStream in = new ObjectInputStream(byteArrayInputStream);
+                        MethodWrapper wrapper = (MethodWrapper) in.readObject();
+                        System.out.println(wrapper);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (ClassNotFoundException e) {
+                        e.printStackTrace();
+                    }
                 }
                 if (len == -1) { // 当客户端主动连接断开时，为了让服务器知道断开了连接，会产生OP_READ事件。所以需要判断读取长度，当读到-1时，关闭channel。
                     listener.onConnectionClosed(new ConnectionClosedEvent(this));

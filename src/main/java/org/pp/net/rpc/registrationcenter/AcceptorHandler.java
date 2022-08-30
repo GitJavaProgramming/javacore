@@ -21,9 +21,8 @@ public abstract class AcceptorHandler implements Handler {
     private Acceptor acceptor;
     private AbstractIOHandler handler;
 
-    public AcceptorHandler(Acceptor acceptor) {
-        this.acceptor = acceptor;
-        acceptor.setHandler(this);
+    public AcceptorHandler() {
+
     }
 
     public AcceptorHandler(SocketChannel socketChannel, SelectorWrapper selectorWrapper, ExecutorService service) {
@@ -47,6 +46,11 @@ public abstract class AcceptorHandler implements Handler {
 
     public void setIOHandler(AbstractIOHandler handler) {
         this.handler = handler;
+        handler.setAcceptorHandler(this);
+    }
+
+    public void setAcceptor(Acceptor acceptor) {
+        this.acceptor = acceptor;
     }
 
     public abstract void setHandler();

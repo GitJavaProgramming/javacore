@@ -27,12 +27,13 @@ public class Server {
         try {
             bootstrap.boos(bossExecutor)
                     .worker(workExecutor)
-                    .setHandler(new AcceptorHandler(bootstrap.getAcceptor()) {
+                    .initAcceptor(new AcceptorHandler() {
                         @Override
                         public void setHandler() {
-                            setIOHandler(new ConnectHandler(this));
+                            setIOHandler(new ConnectHandler());
                         }
-                    }).initAcceptor().bind(9090/*注册中心监听端口号*/);
+                    })
+                    .bind(9090/*注册中心监听端口号*/);
         } catch (IOException e) {
             System.out.println("异常：" + e.getMessage());
         }

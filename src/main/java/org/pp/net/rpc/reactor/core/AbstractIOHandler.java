@@ -34,6 +34,10 @@ public abstract class AbstractIOHandler implements Handler {
         }
     }
 
+    public void setAcceptorHandler(AcceptorHandler acceptorHandler) {
+        this.acceptorHandler = acceptorHandler;
+    }
+
     public abstract void send();
 
     public abstract Future read();

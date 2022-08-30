@@ -25,7 +25,6 @@ public class Bootstrap {
     private ServerSocketChannel serverSocketChannel;
 
     private Acceptor acceptor;
-    private AcceptorHandler handler;
 
     public Bootstrap() {
         try {
@@ -51,8 +50,10 @@ public class Bootstrap {
         return this;
     }
 
-    public Bootstrap initAcceptor() throws IOException {
+    public Bootstrap initAcceptor(AcceptorHandler handler) throws IOException {
         Acceptor acceptor = new Acceptor(serverSocketChannel, selectorWrapper, bossExecutor, workExecutor);
+        // 双向绑定
+        handler.setAcceptor(acceptor);
         acceptor.setHandler(handler);
         return this;
     }
@@ -81,17 +82,14 @@ public class Bootstrap {
 
     private void dispatch(SelectionKey selectionKey) {
         Runnable attachment = (Runnable) selectionKey.attachment();
-        attachment.run();
+        if (attachment != null) {
+            attachment.run();
+        }
     }
 
     private SelectorWrapper configSelector(int count) {
         SelectorWrapper selectorWrapper = SelectorWrapper.getInstance(count);
         return selectorWrapper;
-    }
-
-    public Bootstrap setHandler(AcceptorHandler handler) {
-        this.handler = handler;
-        return this;
     }
 
     public Acceptor getAcceptor() {

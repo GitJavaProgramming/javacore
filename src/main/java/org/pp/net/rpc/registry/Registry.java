@@ -28,10 +28,10 @@ public class Registry {
     public final void scanAndRegisterService(String name) {
         ClassLoader classLoader = ClassLoader.getSystemClassLoader();
         try {
-            Class<?> aClass = classLoader.loadClass(name);
+            Class<?> aClass = classLoader.loadClass(name); // 类加载器不能加载接口？
             if (aClass.isAnnotationPresent(Service.class)) {
                 // 缓存接口实现类
-                ServiceLoader serviceLoader = ServiceLoader.load(aClass);
+                ServiceLoader<?> serviceLoader = ServiceLoader.load(aClass);
                 Object obj = serviceLoader.findFirst().get();
                 instanceCache.put(aClass, obj);
                 // 缓存接口--方法列表
