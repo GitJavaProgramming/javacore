@@ -10,7 +10,7 @@ import java.io.Serializable;
  */
 @Data
 @ToString
-public class MethodWrapper implements Serializable/*, Externalizable*/ {
+public class MethodWrapper implements Serializable, Comparable<MethodWrapper> {
     /* 接口类型 */
     private Class interfaceType;
     /* 方法名 */
@@ -19,6 +19,11 @@ public class MethodWrapper implements Serializable/*, Externalizable*/ {
     private Class returnType;
     /* 参数类型数组 */
     private Class[] argsTypeArray;
+
+    @Override
+    public int compareTo(MethodWrapper o) {
+        return this.toString().compareTo(o.toString());
+    }
 
 //    @Override
 //    public void writeExternal(ObjectOutput out) throws IOException {

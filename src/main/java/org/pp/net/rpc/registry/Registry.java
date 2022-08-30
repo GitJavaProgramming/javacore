@@ -19,7 +19,7 @@ public class Registry {
         // 扫描项目中所有service
 
         // 这里只扫描UserService
-        scanAndRegisterService("org.pp.net.rpc.registry.Service.UserService");
+        scanAndRegisterService("org.pp.net.rpc.provider.UserService");
     }
 
     /**
@@ -28,11 +28,15 @@ public class Registry {
     public final void scanAndRegisterService(String name) {
         ClassLoader classLoader = ClassLoader.getSystemClassLoader();
         try {
-            Class<?> aClass = classLoader.loadClass(name); // 类加载器不能加载接口？
+            Class<?> aClass = classLoader.loadClass(name);
             if (aClass.isAnnotationPresent(Service.class)) {
                 // 缓存接口实现类
                 ServiceLoader<?> serviceLoader = ServiceLoader.load(aClass);
-                Object obj = serviceLoader.findFirst().get();
+                Iterator<?> iterator = serviceLoader.iterator();
+                Object obj = null;
+                while (iterator.hasNext()) {
+                    obj = iterator.next();
+                }
                 instanceCache.put(aClass, obj);
                 // 缓存接口--方法列表
                 Set<MethodWrapper> set = new TreeSet<>();

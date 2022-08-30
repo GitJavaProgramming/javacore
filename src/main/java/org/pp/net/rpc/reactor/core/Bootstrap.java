@@ -1,8 +1,5 @@
 package org.pp.net.rpc.reactor.core;
 
-import org.pp.net.rpc.registrationcenter.Acceptor;
-import org.pp.net.rpc.registrationcenter.AcceptorHandler;
-
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.channels.SelectionKey;
@@ -42,6 +39,7 @@ public class Bootstrap {
         try {
             serverSocketChannel.bind(new InetSocketAddress(port), 1024);
             System.out.println("服务器监听中...");
+            initAcceptor();
             serverSocketChannel.register(mainSelector, SelectionKey.OP_ACCEPT, acceptor);
             poll(); // 轮询selector
         } catch (IOException e) {
@@ -50,11 +48,8 @@ public class Bootstrap {
         return this;
     }
 
-    public Bootstrap initAcceptor(AcceptorHandler handler) throws IOException {
-        Acceptor acceptor = new Acceptor(serverSocketChannel, selectorWrapper, bossExecutor, workExecutor);
-        // 双向绑定
-        handler.setAcceptor(acceptor);
-        acceptor.setHandler(handler);
+    public Bootstrap initAcceptor() throws IOException {
+        acceptor = new Acceptor(serverSocketChannel, selectorWrapper, bossExecutor, workExecutor);
         return this;
     }
 
@@ -82,9 +77,7 @@ public class Bootstrap {
 
     private void dispatch(SelectionKey selectionKey) {
         Runnable attachment = (Runnable) selectionKey.attachment();
-        if (attachment != null) {
-            attachment.run();
-        }
+        attachment.run();
     }
 
     private SelectorWrapper configSelector(int count) {

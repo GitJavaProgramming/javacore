@@ -1,8 +1,6 @@
-package org.pp.net.rpc.registrationcenter;
+package org.pp.net.rpc.reactor.core;
 
-import org.pp.net.rpc.reactor.core.AbstractIOHandler;
-import org.pp.net.rpc.reactor.core.Handler;
-import org.pp.net.rpc.reactor.core.SelectorWrapper;
+import org.pp.net.rpc.registrationcenter.connect.ConnectHandler;
 
 import java.io.IOException;
 import java.nio.channels.SelectionKey;
@@ -19,7 +17,6 @@ public abstract class AcceptorHandler implements Handler {
     private SelectionKey key;
 
     private Acceptor acceptor;
-    private AbstractIOHandler handler;
 
     public AcceptorHandler() {
 
@@ -32,37 +29,67 @@ public abstract class AcceptorHandler implements Handler {
         this.service = service;
     }
 
+    public SocketChannel getSocketChannel() {
+        return socketChannel;
+    }
+
     public void setSocketChannel(SocketChannel socketChannel) {
         this.socketChannel = socketChannel;
+    }
+
+    public SelectorWrapper getSelectorWrapper() {
+        return selectorWrapper;
     }
 
     public void setSelectorWrapper(SelectorWrapper selectorWrapper) {
         this.selectorWrapper = selectorWrapper;
     }
 
+    public Selector getSelector() {
+        return selector;
+    }
+
+    public void setSelector(Selector selector) {
+        this.selector = selector;
+    }
+
+    public ExecutorService getService() {
+        return service;
+    }
+
     public void setService(ExecutorService service) {
         this.service = service;
     }
 
-    public void setIOHandler(AbstractIOHandler handler) {
-        this.handler = handler;
-        handler.setAcceptorHandler(this);
+    public SelectionKey getKey() {
+        return key;
+    }
+
+    public void setKey(SelectionKey key) {
+        this.key = key;
+    }
+
+    public Acceptor getAcceptor() {
+        return acceptor;
     }
 
     public void setAcceptor(Acceptor acceptor) {
         this.acceptor = acceptor;
     }
 
-    public abstract void setHandler();
+    public abstract void bindChildHandler();
 
     @Override
     public void run() {
         try {
+            System.out.println("AcceptorHandler start");
             socketChannel.configureBlocking(false);
             key = socketChannel.register(selector, 0);
-            key.attach(/*new ConnectHandler(socketChannel, key, service)*/handler);
+            ConnectHandler handler = new ConnectHandler(this);
+            key.attach(handler);
             key.interestOps(SelectionKey.OP_READ);
             selector.wakeup();
+            System.out.println("AcceptorHandler end");
         } catch (IOException e) {
             e.printStackTrace();
         }
