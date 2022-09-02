@@ -1,5 +1,7 @@
 package org.pp.net.rpc.reactor.core;
 
+import org.pp.net.rpc.registrationcenter.connect.AcceptorHandler;
+
 public class PipeLineImpl implements PipeLine {
 
     private final AcceptorHandler acceptorHandler;

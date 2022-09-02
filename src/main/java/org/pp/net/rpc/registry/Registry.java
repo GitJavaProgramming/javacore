@@ -1,19 +1,21 @@
 package org.pp.net.rpc.registry;
 
-import java.lang.reflect.Method;
+import java.lang.reflect.Field;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class Registry {
 
+    public static final Registry instance = new Registry();
+
     /**
      * <接口,实现类>
      */
-    private final Map<Class, Object> instanceCache = new ConcurrentHashMap<>();
-    /**
-     * <接口,方法签名列表>
-     */
-    private final Map<Class, Set<MethodWrapper>> methodCache = new ConcurrentHashMap<>();
+    private final Map<Class, Object> localInstanceCache = new ConcurrentHashMap<>();
+    private final Set<Class> cacheIClasses = new HashSet<>();
+
+    private Registry() {
+    }
 
     public void scanAll() {
         // 扫描项目中所有service
@@ -36,31 +38,31 @@ public class Registry {
                 Object obj = null;
                 while (iterator.hasNext()) {
                     obj = iterator.next();
+                    Field[] fields = obj.getClass().getDeclaredFields();
+                    for (Field field : fields) {
+                        if (field.isAnnotationPresent(Reference.class)) {
+                            Object f = ProxyFactory.getProxy(field.getClass());
+                            field.set(obj, f);
+                        }
+                    }
                 }
-                instanceCache.put(aClass, obj);
-                // 缓存接口--方法列表
-                Set<MethodWrapper> set = new TreeSet<>();
-                for (Method method : aClass.getDeclaredMethods()) {
-                    MethodWrapper wrapper = new MethodWrapper();
-                    wrapper.setInterfaceType(aClass);
-                    wrapper.setReturnType(method.getReturnType());
-                    wrapper.setMethodName(method.getName());
-                    wrapper.setArgsTypeArray(method.getParameterTypes());
-                    set.add(wrapper);
-                }
-                methodCache.putIfAbsent(aClass, set);
+                localInstanceCache.put(aClass, obj);
+                cacheIClasses.add(aClass);
             }
         } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
 
     }
 
-    public final Map<Class, Object> getInstanceCache() {
-        return Collections.unmodifiableMap(instanceCache);
+    public Set<Class> getCacheIClasses() {
+        return Collections.unmodifiableSet(cacheIClasses);
     }
 
-    public final Map<Class, Set<MethodWrapper>> getMethodCache() {
-        return Collections.unmodifiableMap(methodCache);
+    public final Map<Class, Object> getLocalInstanceCache() {
+        return Collections.unmodifiableMap(localInstanceCache);
     }
+
 }

@@ -15,10 +15,8 @@ public class MethodWrapper implements Serializable, Comparable<MethodWrapper> {
     private Class interfaceType;
     /* 方法名 */
     private String methodName;
-    /* 返回值类型 */
-    private Class returnType;
-    /* 参数类型数组 */
-    private Class[] argsTypeArray;
+    /* 参数列表 */
+    private Object[] args;
 
     @Override
     public int compareTo(MethodWrapper o) {

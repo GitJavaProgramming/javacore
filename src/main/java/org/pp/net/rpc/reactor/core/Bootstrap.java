@@ -30,6 +30,7 @@ public class Bootstrap {
             selectorWrapper = configSelector(1);
             selectors = selectorWrapper.getSelectors();
             mainSelector = selectorWrapper.getSelectors()[0];
+            acceptor = new Acceptor(serverSocketChannel, selectorWrapper, bossExecutor, workExecutor);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -39,17 +40,11 @@ public class Bootstrap {
         try {
             serverSocketChannel.bind(new InetSocketAddress(port), 1024);
             System.out.println("服务器监听中...");
-            initAcceptor();
             serverSocketChannel.register(mainSelector, SelectionKey.OP_ACCEPT, acceptor);
             poll(); // 轮询selector
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return this;
-    }
-
-    public Bootstrap initAcceptor() throws IOException {
-        acceptor = new Acceptor(serverSocketChannel, selectorWrapper, bossExecutor, workExecutor);
         return this;
     }
 

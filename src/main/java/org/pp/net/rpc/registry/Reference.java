@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
  * 这个远程服务不需要在本地应用实例化，因为涉及到远程方法调用，通过网络协议实现数据传输
  * 实际上本地使用rpc协议发起网络请求，得到调用返回值
  */
-@Target(ElementType.TYPE)
+@Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Reference {
 }

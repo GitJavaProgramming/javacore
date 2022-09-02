@@ -1,18 +1,13 @@
 package org.pp.net.rpc.registrationcenter;
 
 import org.pp.net.rpc.reactor.core.Bootstrap;
-import org.pp.net.rpc.registry.MethodWrapper;
 
-import java.io.IOException;
-import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
  * 注册中心
- * 注册服务 -- 应用名:ip
+ * 远程注册服务 -- 服务名:url地址列表
  */
 public class Server {
     private static final int N_CPU = Runtime.getRuntime().availableProcessors();

@@ -1,7 +1,6 @@
 package org.pp.net.rpc.registrationcenter.connect;
 
 import org.pp.net.rpc.reactor.core.AbstractIOHandler;
-import org.pp.net.rpc.reactor.core.AcceptorHandler;
 import org.pp.net.rpc.reactor.event.ConnectionClosedEvent;
 import org.pp.net.rpc.reactor.listener.ConnectListener;
 import org.pp.net.rpc.reactor.listener.Listener;
@@ -12,9 +11,9 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.SocketChannel;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
@@ -22,28 +21,20 @@ import java.util.concurrent.Future;
 public class ConnectHandler extends AbstractIOHandler {
 
     private final Map<Class, Set<MethodWrapper>> cache = new ConcurrentHashMap<>();
+    private final Set<Class> classSet = new HashSet<>();
     protected SocketChannel channel;
     protected ExecutorService service;
     protected SelectionKey key;
     protected Listener listener;
     protected AcceptorHandler acceptorHandler;
 
-    public ConnectHandler() {
-    }
-
     public ConnectHandler(AcceptorHandler acceptorHandler) {
+        super(acceptorHandler);
         this.channel = acceptorHandler.getSocketChannel();
         this.key = acceptorHandler.getKey();
         this.service = acceptorHandler.getService();
         this.listener = new ConnectListener(channel, key.selector(), this);
         System.out.println("生成IOHandler实例====" + hashCode());
-    }
-
-    public ConnectHandler(SocketChannel channel, SelectionKey key, ExecutorService service) {
-        this.channel = channel;
-        this.key = key;
-        this.service = service;
-        this.listener = new ConnectListener(channel, key.selector(), this);
     }
 
     @Override
@@ -82,12 +73,15 @@ public class ConnectHandler extends AbstractIOHandler {
 //                    byte[] wrapIntArr = new byte[4];
                             // 将字节数组转换成java对象
                             try {
-                                MethodWrapper methodWrapper = Hessian2Utils.deserialize(bytes);
-                                System.out.println(methodWrapper);
-                                Set<MethodWrapper> set = new TreeSet<>();
-                                set.add(methodWrapper);
-                                cache.putIfAbsent(methodWrapper.getInterfaceType(), set);
-                                System.out.println(cache);
+//                                MethodWrapper methodWrapper = Hessian2Utils.deserialize(bytes);
+//                                System.out.println(methodWrapper);
+//                                Set<MethodWrapper> set = new TreeSet<>();
+//                                set.add(methodWrapper);
+//                                cache.putIfAbsent(methodWrapper.getInterfaceType(), set);
+//                                System.out.println(cache);
+                                Class cacheObject = Hessian2Utils.deserialize(bytes);
+                                classSet.add(cacheObject);
+                                System.out.println(classSet);
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }

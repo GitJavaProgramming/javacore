@@ -1,6 +1,6 @@
 package org.pp.net.rpc.reactor.core;
 
-import org.pp.net.rpc.registrationcenter.connect.ConnectHandler;
+import org.pp.net.rpc.registrationcenter.connect.AcceptorHandler;
 
 import java.io.IOException;
 import java.nio.channels.ServerSocketChannel;
@@ -15,6 +15,8 @@ public class Acceptor implements Runnable {
     private final ExecutorService service;
     private SocketChannel socketChannel;
 
+    private AbstractIOHandler childHandler;
+
     public Acceptor(ServerSocketChannel serverSocketChannel, SelectorWrapper selectorWrapper, ExecutorService boss, ExecutorService service) {
         this.serverSocketChannel = serverSocketChannel;
         this.selectorWrapper = selectorWrapper;
@@ -26,15 +28,7 @@ public class Acceptor implements Runnable {
         try {
             socketChannel = serverSocketChannel.accept();
             System.out.println(socketChannel + "新客户端连接...");
-            AcceptorHandler acceptorHandler = new AcceptorHandler() {
-                @Override
-                public void bindChildHandler() {
-//                    setIOHandler(new ConnectHandler());
-                }
-            };
-            setAcceptorHandler(acceptorHandler);
-            acceptorHandler.setAcceptor(this);
-            boss.submit(acceptorHandler); // 应该维护责任链
+            boss.submit(new AcceptorHandler(socketChannel, selectorWrapper, service, childHandler));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -43,12 +37,5 @@ public class Acceptor implements Runnable {
     @Override
     public void run() {
         startup();
-    }
-
-    public void setAcceptorHandler(AcceptorHandler acceptorHandler) {
-        acceptorHandler.setSocketChannel(socketChannel);
-        acceptorHandler.setSelectorWrapper(selectorWrapper);
-        acceptorHandler.setService(service);
-        acceptorHandler.setSelector(selectorWrapper.getCurrSelector());
     }
 }

@@ -1,5 +1,7 @@
 package org.pp.net.rpc.reactor.core;
 
+import org.pp.net.rpc.registrationcenter.connect.AcceptorHandler;
+
 import java.nio.ByteBuffer;
 import java.util.concurrent.Future;
 
@@ -9,7 +11,10 @@ public abstract class AbstractIOHandler implements Handler {
     protected final ByteBuffer output = ByteBuffer.allocate(1024);
     protected int state = READING;
 
-    public AbstractIOHandler() {
+    protected AcceptorHandler acceptorHandler;
+
+    public AbstractIOHandler(AcceptorHandler acceptorHandler) {
+        this.acceptorHandler = acceptorHandler;
     }
 
     @Override

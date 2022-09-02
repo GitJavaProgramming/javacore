@@ -1,5 +1,8 @@
-package org.pp.net.rpc.reactor.core;
+package org.pp.net.rpc.registrationcenter.connect;
 
+import org.pp.net.rpc.reactor.core.AbstractIOHandler;
+import org.pp.net.rpc.reactor.core.Handler;
+import org.pp.net.rpc.reactor.core.SelectorWrapper;
 import org.pp.net.rpc.registrationcenter.connect.ConnectHandler;
 
 import java.io.IOException;
@@ -8,7 +11,7 @@ import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
 import java.util.concurrent.ExecutorService;
 
-public abstract class AcceptorHandler implements Handler {
+public class AcceptorHandler implements Handler {
 
     private SocketChannel socketChannel;
     private SelectorWrapper selectorWrapper;
@@ -16,17 +19,14 @@ public abstract class AcceptorHandler implements Handler {
     private ExecutorService service;
     private SelectionKey key;
 
-    private Acceptor acceptor;
+    private AbstractIOHandler handler;
 
-    public AcceptorHandler() {
-
-    }
-
-    public AcceptorHandler(SocketChannel socketChannel, SelectorWrapper selectorWrapper, ExecutorService service) {
+    public AcceptorHandler(SocketChannel socketChannel, SelectorWrapper selectorWrapper, ExecutorService service, AbstractIOHandler handler) {
         this.socketChannel = socketChannel;
         this.selectorWrapper = selectorWrapper;
         this.selector = selectorWrapper.getCurrSelector();
         this.service = service;
+        this.handler = handler;
     }
 
     public SocketChannel getSocketChannel() {
@@ -69,23 +69,15 @@ public abstract class AcceptorHandler implements Handler {
         this.key = key;
     }
 
-    public Acceptor getAcceptor() {
-        return acceptor;
-    }
-
-    public void setAcceptor(Acceptor acceptor) {
-        this.acceptor = acceptor;
-    }
-
-    public abstract void bindChildHandler();
-
     @Override
     public void run() {
         try {
             System.out.println("AcceptorHandler start");
             socketChannel.configureBlocking(false);
             key = socketChannel.register(selector, 0);
-            ConnectHandler handler = new ConnectHandler(this);
+            if (handler == null) {
+                handler = new ConnectHandler(this);
+            }
             key.attach(handler);
             key.interestOps(SelectionKey.OP_READ);
             selector.wakeup();
