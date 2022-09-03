@@ -1,4 +1,4 @@
-package org.pp.algorithms.datastruct;
+package org.pp.algorithms.datastruct.java;
 
 public interface SearchTree<K, E> extends Container<E> {
     void put(K key, E elem);

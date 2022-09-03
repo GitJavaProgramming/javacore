@@ -1,4 +1,4 @@
-package org.pp.algorithms.datastruct;
+package org.pp.algorithms.datastruct.java;
 
 /**
  * （逻辑/物理）存储位置和关键字之间的对应关系，使得每个关键字对应唯一一个存储位置。按此思想建立的表称为哈希表。

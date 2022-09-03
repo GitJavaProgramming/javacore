@@ -1,4 +1,4 @@
-package org.pp.algorithms.datastruct;
+package org.pp.algorithms.datastruct.java;
 
 import java.io.Serializable;
 import java.util.stream.Stream;

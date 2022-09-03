@@ -1,4 +1,4 @@
-package org.pp.algorithms.datastruct;
+package org.pp.algorithms.datastruct.java;
 
 public interface BinaryTree<E> extends Container<E> {
     void add(E e);

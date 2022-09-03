@@ -59,4 +59,4 @@
  * 算法导论
  * 离散数学 屈婉玲 耿素云 张立昂
  */
-package org.pp.algorithms.datastruct;
+package org.pp.algorithms.datastruct.java;

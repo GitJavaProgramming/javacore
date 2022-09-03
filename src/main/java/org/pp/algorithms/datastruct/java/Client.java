@@ -1,4 +1,6 @@
-package org.pp.algorithms.datastruct;
+package org.pp.algorithms.datastruct.java;
+
+import org.junit.Test;
 
 import java.lang.reflect.Array;
 import java.util.Arrays;
@@ -71,6 +73,7 @@ public class Client {
         System.out.println(btree);
     }
 
+    @Test
     public void testPriorityQueue() {
         BinaryHeap<Integer> priorityQueue = new BinaryHeap<>();
         priorityQueue.add(11);

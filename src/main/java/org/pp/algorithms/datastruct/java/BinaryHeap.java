@@ -1,4 +1,4 @@
-package org.pp.algorithms.datastruct;
+package org.pp.algorithms.datastruct.java;
 
 import java.util.Arrays;
 
@@ -60,7 +60,7 @@ public class BinaryHeap<E> implements Container<E> {
         Comparable<E> min = array[0];
         Comparable<E> last = array[--size]; // 缓存最后一个结点
         array[size] = null; // 删除最后一个结点
-        int child = 0, curr = 0;
+        int child, curr = 0;
         while ((child = 2 * curr + 1) < size) { // 找出最后一个结点在完全二叉树中左子树中的位置
             if (child + 1 < size && array[child + 1].compareTo((E) array[child]) < 0) // 判断左右子结点大小
                 child++;
