@@ -1,6 +1,10 @@
-package org.pp.algorithms.datastruct.java;
+package org.pp.algorithms.datastruct;
 
 import org.junit.Test;
+import org.pp.algorithms.datastruct.heap.BinaryHeap;
+import org.pp.algorithms.datastruct.tree.BTree;
+import org.pp.algorithms.datastruct.tree.RedBlackTree;
+import org.pp.algorithms.datastruct.tree.WeirdBinaryTree;
 
 import java.lang.reflect.Array;
 import java.util.Arrays;
@@ -76,8 +80,8 @@ public class Client {
     @Test
     public void testPriorityQueue() {
         BinaryHeap<Integer> priorityQueue = new BinaryHeap<>();
-        priorityQueue.add(11);
         priorityQueue.add(2);
+        priorityQueue.add(11);
         priorityQueue.add(14);
         priorityQueue.add(1);
         priorityQueue.add(7);

@@ -1,4 +1,4 @@
-package org.pp.algorithms.datastruct.java.btree;
+package org.pp.algorithms.datastruct.tree.bplustree;
 
 import java.util.Random;
 

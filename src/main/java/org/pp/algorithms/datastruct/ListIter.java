@@ -1,4 +1,4 @@
-package org.pp.algorithms.datastruct.java;
+package org.pp.algorithms.datastruct;
 
 import java.util.Iterator;
 

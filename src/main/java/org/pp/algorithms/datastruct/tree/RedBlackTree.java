@@ -1,4 +1,4 @@
-package org.pp.algorithms.datastruct.java;
+package org.pp.algorithms.datastruct.tree;
 
 import java.util.Comparator;
 

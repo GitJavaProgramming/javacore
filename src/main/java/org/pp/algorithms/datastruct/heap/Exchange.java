@@ -1,4 +1,4 @@
-package org.pp.algorithms.datastruct;
+package org.pp.algorithms.datastruct.heap;
 
 /**
  * ************自强不息************

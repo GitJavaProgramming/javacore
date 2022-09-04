@@ -1,4 +1,6 @@
-package org.pp.algorithms.datastruct.java;
+package org.pp.algorithms.datastruct.heap;
+
+import org.pp.algorithms.datastruct.Container;
 
 import java.util.Arrays;
 
@@ -46,8 +48,8 @@ public class BinaryHeap<E> implements Container<E> {
             int parent = (curr - 1) / 2;
             if (val.compareTo(array[parent]) > 0)
                 break;
-            array[curr] = array[parent];
-            curr = parent;
+            array[curr] = array[parent]; // 将parent值复制为子节点
+            curr = parent; // 向上调整 确定val存放的位置
         }
         array[curr] = val;
     }
@@ -61,13 +63,13 @@ public class BinaryHeap<E> implements Container<E> {
         Comparable<E> last = array[--size]; // 缓存最后一个结点
         array[size] = null; // 删除最后一个结点
         int child, curr = 0;
-        while ((child = 2 * curr + 1) < size) { // 找出最后一个结点在完全二叉树中左子树中的位置
+        while ((child = 2 * curr + 1) < size) { // 找出最后一个结点在完全二叉树中的位置,从左子节点开始
             if (child + 1 < size && array[child + 1].compareTo((E) array[child]) < 0) // 判断左右子结点大小
-                child++;
+                child++; // 右子树更小时
             if (last.compareTo((E) array[child]) <= 0)
                 break;
-            array[curr] = array[child];
-            curr = child;
+            array[curr] = array[child]; // 复制子节点值
+            curr = child; // 向下查找
         }
         array[curr] = last;
         return min;

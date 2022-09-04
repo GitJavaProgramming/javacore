@@ -1,4 +1,4 @@
-package org.pp.algorithms.datastruct;
+package org.pp.algorithms.datastruct.heap;
 
 import java.util.Arrays;
 
@@ -62,7 +62,7 @@ public class Heap implements Exchange {
         Integer[] temp = new Integer[len];
         for (int i = len - 1; i >= 0; i--) {
             temp[i] = arr[0]; // 取堆顶元素
-            swap(arr, 0, i);
+//            swap(arr, 0, i);
 //            System.out.println("第" + i + "次:" + Arrays.toString(arr));
 //            arr = Arrays.copyOf(arr, i);
             arr[0] = Integer.MIN_VALUE; // 最小值，模拟从堆中去除

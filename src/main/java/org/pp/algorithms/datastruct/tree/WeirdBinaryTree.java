@@ -1,4 +1,6 @@
-package org.pp.algorithms.datastruct.java;
+package org.pp.algorithms.datastruct.tree;
+
+import org.pp.algorithms.datastruct.SingleLinkedList;
 
 import java.io.Serializable;
 
