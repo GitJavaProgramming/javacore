@@ -1,4 +1,4 @@
-package org.pp.io;
+package org.pp.util;
 
 public class ByteUtil {
 

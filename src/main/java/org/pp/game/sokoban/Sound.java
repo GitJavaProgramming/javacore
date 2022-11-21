@@ -6,7 +6,9 @@ import java.io.IOException;
 
 public class Sound {
 
-    String path = "E:/code/java/core/src/main/resources/img/";
+    public static final String CLASSPATH = ClassLoader.getSystemClassLoader().getResource("").getFile();
+
+    String path = CLASSPATH + "/static/img/";
     String file = "nor.mid";
     Sequence seq;
     Sequencer midi;

@@ -107,13 +107,13 @@ public class MainFrame extends JFrame implements ActionListener {
 
         public void loadImage(Graphics g) {
             Toolkit toolkit = Toolkit.getDefaultToolkit();
-            Image image = toolkit.getImage("E:\\code\\java\\core\\src\\main\\resources\\logo.jpg");
+            Image image = toolkit.getImage("E:\\code\\java\\core\\src\\main\\resources\\static\\img\\logo.jpg");
             int w = image.getWidth(this);
             int h = image.getHeight(this);
             MediaTracker mediaTracker = new MediaTracker(this);
             mediaTracker.addImage(image, 0);
             mediaTracker.checkAll(true);
-            g.drawImage(image, 0, 0, w * 2, h * 2, this);
+            g.drawImage(image, 0, 0, w * 3, h * 3, this);
         }
 
         @Override

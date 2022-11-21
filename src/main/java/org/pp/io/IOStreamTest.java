@@ -2,6 +2,7 @@ package org.pp.io;
 
 import org.junit.After;
 import org.junit.Test;
+import org.pp.util.ByteUtil;
 
 import java.io.*;
 import java.net.URL;
@@ -26,7 +27,7 @@ public class IOStreamTest {
 
     private static final URL RESOURCE = ClassLoader.getSystemClassLoader().getResource("");
     private static final String CLASSPATH = RESOURCE.getFile();
-    private static final String DOC = CLASSPATH + File.separator + "doc" + File.separator;
+    private static final String DOC = CLASSPATH + File.separator + "static" + File.separator + "doc" + File.separator;
     InputStream in;
     OutputStream out;
 

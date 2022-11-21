@@ -106,7 +106,7 @@ public class GameFrame extends JFrame implements ActionListener, MouseListener, 
         pic = new Image[14];
         for (int i = 0; i <= 13; i++) {
             pic[i] = Toolkit.getDefaultToolkit().getImage
-                    ("E:\\code\\java\\core\\src\\main\\resources\\img/pic" + i + ".png");
+                    (Sound.CLASSPATH + "\\static\\img\\pic" + i + ".png");
         }
     }
 
