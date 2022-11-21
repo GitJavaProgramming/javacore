@@ -10,15 +10,16 @@ public class ThreadInfo {
     public static void main(String[] args) throws InterruptedException {
         System.out.println("Java线程全部状态：" + Arrays.toString(Thread.State.values()));
         Thread thread = new Thread(() -> {
-            System.out.println("线程run...");
-            Thread[] ts = new Thread[3]; // main、Monitor Ctrl-Break、Thread-0
+            System.out.println(Thread.currentThread().getName() + "线程start...");
+            Thread[] ts = new Thread[2]; // main、Monitor Ctrl-Break、Thread-0
             Thread.currentThread().getThreadGroup().enumerate(ts);
             Arrays.stream(ts).forEach(ThreadInfo::printThreadInfo);
+            System.out.println(Thread.currentThread().getName() + "线程end...");
         });
-        System.out.println("线程状态：" + thread.getState()); // NEW
-        thread.start();
-        printThreadInfo(thread);
+        System.out.println(thread.getName() + "线程状态：" + thread.getState()); // NEW
         System.out.println("*************************************************************");
+        thread.setDaemon(true);
+        thread.start();
         // 当前线程休眠，暂停当前线程活动。线程不会失去任何监视器的所有权？到底是谁让main休眠？
         // public static native void sleep(long millis) throws InterruptedException;
         Thread.sleep(3000);

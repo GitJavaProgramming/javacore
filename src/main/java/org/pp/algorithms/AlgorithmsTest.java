@@ -1,6 +1,9 @@
 package org.pp.algorithms;
 
 import org.junit.Test;
+import org.pp.algorithms.sort.Sorts;
+
+import java.util.Arrays;
 
 /**
  * ************自强不息************
@@ -24,5 +27,17 @@ public class AlgorithmsTest {
                 }
             }
         }
+    }
+
+    @Test
+    public void test2() {
+        System.out.println(Arrays.binarySearch(new int[]{1, 9, 10, 100}, 10));
+    }
+
+    @Test
+    public void test3() {
+        int[] arr = {8, 0, 1, 5, 7, 2, 3, 4, 9, 6, 100};
+        Sorts.sort(arr, Sorts.SortType.MERGE);
+        System.out.println("排序结果：" + Arrays.toString(arr));
     }
 }

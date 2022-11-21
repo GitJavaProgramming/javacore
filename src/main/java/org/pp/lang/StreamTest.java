@@ -1,5 +1,7 @@
 package org.pp.lang;
 
+import org.junit.Test;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -8,12 +10,8 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class StreamTest {
 
-    public static void main(String[] args) {
-        testStreamMap();
-//        testStreamSource();
-    }
-
-    private static void testStreamMap() {
+    @Test
+    public void testStreamMap() {
         Map<Integer, String> map = new HashMap<>();
         map.put(1, "1");
         map.put(8, "8");
@@ -33,7 +31,8 @@ public class StreamTest {
         System.out.println(num.get());
     }
 
-    private static void testStreamSource() {
+    @Test
+    public void testStreamSource() {
         // 通过抛出异常来阻止修改数据源！！！
         List<String> list = new ArrayList<>();
 //        CopyOnWriteArrayList<String> list = new CopyOnWriteArrayList<>(); // java.lang.UnsupportedOperationException

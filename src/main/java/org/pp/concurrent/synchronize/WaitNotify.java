@@ -10,8 +10,8 @@ public class WaitNotify {
 
     public static void main(String[] args) throws InterruptedException {
         WaitNotify waitNotify = new WaitNotify();
-//        waitNotify.test();
-        waitNotify.test2();
+        waitNotify.test();
+//        waitNotify.test2();
     }
 
     /**
@@ -35,8 +35,8 @@ public class WaitNotify {
      * 测试wait notify以及thread.join
      */
     public void test() {
-        WaitNotify.A a = new A("Thread-A");
-        WaitNotify.B b = new B("Thread-B");
+        A a = new A("Thread-A");
+        B b = new B("Thread-B");
 
         long t1 = System.currentTimeMillis();
         a.start();
@@ -44,8 +44,12 @@ public class WaitNotify {
         long t2 = System.currentTimeMillis();
         System.out.println("start end : " + (t2 - t1) + "ms");
         // main线程等待a、b线程运行结束，并不保证线程运行顺序
-//        a.join();
-//        b.join();
+        try {
+            a.join();
+            b.join();
+        } catch (InterruptedException e) {
+            System.out.println("中断...");
+        }
         long t3 = System.currentTimeMillis();
         System.out.println("run end : " + (t3 - t2) + "ms");
     }
@@ -77,7 +81,6 @@ public class WaitNotify {
                     System.out.println(name + "释放监视器锁 wait.");
                     resource.wait(3000); // 最多等待3s
                 } catch (InterruptedException e) {
-//                    e.printStackTrace();
                     Thread.interrupted();
                     System.out.println("忽略中断");
                 }

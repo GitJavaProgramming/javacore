@@ -1,0 +1,20 @@
+输入
+1+2*3;
+以end结束
+输出
+Symbol：TOKEN
+数字：NUM_OR_ID
++：PLUS
+*：TIMES
+;：SEMI
+
+例如：
+1+2*3;
+end
+
+Token: NUM_OR_ID ,Symbol: 1
+Token: PLUS ,Symbol: +
+Token: NUM_OR_ID ,Symbol: 2
+Token: TIMES ,Symbol: *
+Token: NUM_OR_ID ,Symbol: 3
+Token: SEMI ,Symbol: ;

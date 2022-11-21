@@ -8,7 +8,7 @@ import java.util.stream.IntStream;
 
 /**
  * 线程调度处理机
- * Java线程在这里和操作系统的进程调度不一样，Java线程启动后就一直执行，所以我认为没有线程调度的说法，但有线程间通信的讲法
+ * Java线程在这里和操作系统的进程调度不一样，Java线程启动后就一直执行
  */
 public class Processor {
 

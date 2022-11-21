@@ -1,13 +1,19 @@
 package org.pp.concurrent.thread;
 
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
+
 /**
  * 线程api
  * 中断
  */
 public class ThreadApi {
+
+    private volatile static boolean stop = false;
+
     public static void main(String[] args) throws InterruptedException {
-//        testInterrupt();
-        getAllThread();
+        testInterrupt2();
+//        getAllThread();
     }
 
     public static void getAllThread() {
@@ -33,6 +39,9 @@ public class ThreadApi {
 
     }
 
+    /**
+     * 不能使用junit测试多线程 否则出现意外情况
+     */
     public static void testInterrupt() throws InterruptedException {
         Thread t = new Thread(() -> {
             System.out.println("run......");
@@ -40,8 +49,7 @@ public class ThreadApi {
             while (!Thread.currentThread().isInterrupted()/*测试线程是否被中断*/) { // 线程不中断就计数
                 i++;
             }
-            System.out.println("线程被中断：i=" + i);
-            System.out.println(Long.MAX_VALUE);
+            System.out.println("线程被中断了：i=" + i);
 
             Thread.interrupted(); // 清除中断
 
@@ -62,5 +70,40 @@ public class ThreadApi {
             Thread.sleep(1000);
             t.interrupt(); // 中断线程t
         }
+    }
+
+    /**
+     * 为什么thread1停止执行了？  不能使用junit测试多线程 否则出现意外情况
+     */
+    public static void testInterrupt2() throws InterruptedException {
+        // 线程1 数值累加 休眠1秒 忽略中断
+        AtomicInteger i = new AtomicInteger();
+        Thread thread1 = new Thread(() -> {
+            while (!stop && !Thread.currentThread().isInterrupted()) {
+                i.getAndIncrement();
+                try {
+                    TimeUnit.SECONDS.sleep(1);
+                } catch (InterruptedException e) {
+                    System.out.println("thread1中断异常处理...");
+                    Thread.interrupted();
+                }
+            }
+        });
+        thread1.start();
+        // 线程2 中断线程1 计数 休眠1秒
+        Thread thread2 = new Thread(() -> {
+            while (!stop && !Thread.currentThread().isInterrupted()) {
+                thread1.interrupt();
+                System.out.println(i.get());
+                try {
+                    TimeUnit.SECONDS.sleep(1);
+                } catch (InterruptedException e) {
+                    System.out.println("thread2中断异常处理...");
+                }
+            }
+        });
+        thread2.start();
+        TimeUnit.SECONDS.sleep(5);
+        stop = true; // 为什么thread1停止执行了？
     }
 }

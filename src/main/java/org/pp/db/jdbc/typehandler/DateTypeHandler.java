@@ -1,5 +1,6 @@
 package org.pp.db.jdbc.typehandler;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
@@ -16,7 +17,12 @@ public class DateTypeHandler implements TypeHandler<Date> {
     }
 
     @Override
-    public void setValue(ResultSet resultSet, int i, Date date) {
-
+    public void setValue(PreparedStatement statement, int i, Date date) {
+        try {
+            statement.setDate(i, (java.sql.Date) date);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
+
 }

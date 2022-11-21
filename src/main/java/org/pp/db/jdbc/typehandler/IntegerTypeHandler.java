@@ -1,5 +1,6 @@
 package org.pp.db.jdbc.typehandler;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -16,7 +17,12 @@ public class IntegerTypeHandler implements TypeHandler<Integer> {
     }
 
     @Override
-    public void setValue(ResultSet resultSet, int i, Integer integer) {
-
+    public void setValue(PreparedStatement statement, int i, Integer integer) {
+        try {
+            statement.setInt(i, integer);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
+
 }

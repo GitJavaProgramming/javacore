@@ -1,0 +1,33 @@
+Quality Gate
+Reliability
+Security
+Security Review
+Maintainability
+Coverage
+Duplications
+Size
+Languages
+
+Bugs
+Vulnerabilities
+Hotspots Reviewed
+Code Smells
+Duplications
+
+
+质量检验关
+可靠性
+安全
+安全审查
+可维护性
+报道
+重复
+大小
+语言
+
+
+错误
+漏洞
+热点了
+代码味道
+重复
