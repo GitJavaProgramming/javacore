@@ -2,12 +2,7 @@ package org.pp.db.jdbc.core;
 
 import com.mysql.cj.jdbc.MysqlDataSource;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.io.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -53,7 +48,8 @@ public class Environment {
     private Properties getProperties() {
         Properties properties = new Properties();
         try {
-            InputStream inputStream = Files.newInputStream(Paths.get("mysql.properties")/*项目根目录*/);
+            String CLASSPATH = Environment.class.getClassLoader().getResource("").getFile();
+            InputStream inputStream = new FileInputStream(CLASSPATH + File.separator + "mysql.properties");
             properties.load(inputStream);
         } catch (IOException e) {
             e.printStackTrace();

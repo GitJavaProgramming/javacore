@@ -5,6 +5,7 @@ import org.pp.db.jdbc.typehandler.TypeHandler;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -65,23 +66,23 @@ public class Executor {
             // 如何判断查询的结果是什么类型
             Class returnType = methodWrapper.getReturnType();
 
-//            JSONArray jsonArray = new JSONArray();
-//            while (resultSet.next()) {
-//                JSONObject json = new JSONObject();
-//                for (int index = 1; index <= columnCount; index++) {
-//                    String columnName = metaData.getColumnName(index);
-//                    Class<?> clazz = classLoader.loadClass(metaData.getColumnClassName(index));
-//                    TypeHandler typeHandler = TypeHandlerRegistry.getTypeHandler(clazz);
-//                    Object obj = typeHandler.getValue(resultSet, index);
-//                    json.putIfAbsent(columnName, obj);
-//                }
-//                jsonArray.add(json);
-//            }
-////            List<User> users = jsonArray.toList(User.class);
-//            List list = jsonArray.toList(returnType); // 无论什么类型都添加到List再返回
-            return new ArrayList<>();
+            List<Map<String, Object>> list = new ArrayList();
+            while (resultSet.next()) {
+                Map<String, Object> rowMap = new HashMap<>();
+                for (int index = 1; index <= columnCount; index++) {
+                    String columnName = metaData.getColumnName(index);
+                    Class<?> clazz = classLoader.loadClass(metaData.getColumnClassName(index));
+                    TypeHandler typeHandler = TypeHandlerRegistry.getTypeHandler(clazz);
+                    Object obj = typeHandler.getValue(resultSet, index);
+                    rowMap.put(columnName, obj);
+                }
+                list.add(rowMap);
+            }
+            return (list.size() == 0) ? list.get(0) : list;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         } finally {
             try {
                 conn.close();
@@ -93,9 +94,7 @@ public class Executor {
     }
 
     public void hook() {
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            service.shutdownNow();
-        }));
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> service.shutdownNow()));
     }
 
     public void query(String query) {
@@ -107,23 +106,24 @@ public class Executor {
             int columnCount = metaData.getColumnCount(); // 每条记录有多少列
             DatabaseMetaData connMetaData = conn.getMetaData();
             ClassLoader classLoader = ClassLoader.getSystemClassLoader();
-//            // 如何判断查询的结果是什么类型
-//            JSONArray jsonArray = new JSONArray();
-//            while (resultSet.next()) {
-//                JSONObject json = new JSONObject();
-//                for (int index = 1; index <= columnCount; index++) {
-//                    String columnName = metaData.getColumnName(index);
-//                    Class<?> clazz = classLoader.loadClass(metaData.getColumnClassName(index));
-//                    TypeHandler typeHandler = TypeHandlerRegistry.getTypeHandler(clazz);
-//                    Object obj = typeHandler.getValue(resultSet, index);
-//                    json.putIfAbsent(columnName, obj);
-//                }
-//                jsonArray.add(json);
-//            }
-//            List<User> users = jsonArray.toList(User.class);
-            System.out.println(new ArrayList<>());
+
+            List<Map<String, Object>> list = new ArrayList();
+            while (resultSet.next()) {
+                Map<String, Object> rowMap = new HashMap<>();
+                for (int index = 1; index <= columnCount; index++) {
+                    String columnName = metaData.getColumnName(index);
+                    Class<?> clazz = classLoader.loadClass(metaData.getColumnClassName(index));
+                    TypeHandler typeHandler = TypeHandlerRegistry.getTypeHandler(clazz);
+                    Object obj = typeHandler.getValue(resultSet, index);
+                    rowMap.put(columnName, obj);
+                }
+                list.add(rowMap);
+            }
+            System.out.println(list);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         } finally {
             try {
                 conn.close();
