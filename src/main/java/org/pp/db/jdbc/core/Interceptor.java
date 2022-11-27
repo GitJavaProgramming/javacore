@@ -1,4 +1,4 @@
-package org.pp.lang.proxy;
+package org.pp.db.jdbc.core;
 
 public interface Interceptor {
     default void before() {

@@ -1,7 +1,5 @@
 package org.pp.db.jdbc.core;
 
-import org.pp.lang.proxy.Interceptor;
-
 import java.lang.reflect.*;
 import java.util.*;
 import java.util.concurrent.*;
