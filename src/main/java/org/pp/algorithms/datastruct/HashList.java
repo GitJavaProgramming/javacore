@@ -9,9 +9,9 @@ public class HashList<E> implements Container<E> {
     private static final int capacity = 16; // 指定最大容量
     private static final int MIN_TREEIFY_CAPACITY = 64;
     private static final float DEFAULT_LOAD_FACTOR = 0.75f;
-    private int length;
+    private final int length;
     private int count;
-    private DoubleLinkedList<E>[] values;
+    private final DoubleLinkedList<E>[] values;
 
     public HashList() {
         this.length = capacity;
@@ -45,7 +45,7 @@ public class HashList<E> implements Container<E> {
         int hash = getIndex(v);
         DoubleLinkedList<E> list = values[hash];
 //        list.iterator()
-        return list == null ? false : list.contains(v);
+        return list != null && list.contains(v);
     }
 
     @Override

@@ -9,7 +9,7 @@ package org.pp.complier.learn.simple;
  **/
 public class ImprovedParser {
 
-    private Lexer lexer;
+    private final Lexer lexer;
     private boolean isLegalStatement = true;
 
     public ImprovedParser(Lexer lexer) {
@@ -26,8 +26,7 @@ public class ImprovedParser {
 
             if (lexer.match(Lexer.SEMI)) {
                 lexer.advance();
-            }
-            else {
+            } else {
                 isLegalStatement = false;
                 System.out.println("line: " + lexer.yylineno + " Missing semicolon");
             }
@@ -54,8 +53,7 @@ public class ImprovedParser {
             isLegalStatement = false;
             System.out.println("unknow symbol: " + lexer.yytext);
             return;
-        }
-        else {
+        } else {
             /*
              * "空" 就是不再解析，直接返回
              */
@@ -92,7 +90,7 @@ public class ImprovedParser {
     */
 
     private void term() {
-        factor ();
+        factor();
 
         /*
          * 将term_prime 的递归调用改成循环方式
@@ -129,14 +127,12 @@ public class ImprovedParser {
 
         if (lexer.match(Lexer.NUM_OR_ID)) {
             lexer.advance();
-        }
-        else if (lexer.match(Lexer.LP)){
+        } else if (lexer.match(Lexer.LP)) {
             lexer.advance();
             expression();
             if (lexer.match(Lexer.RP)) {
                 lexer.advance();
-            }
-            else {
+            } else {
                 /*
                  * 有左括号但没有右括号，错误
                  */
@@ -144,8 +140,7 @@ public class ImprovedParser {
                 System.out.println("line: " + lexer.yylineno + " Missing )");
                 return;
             }
-        }
-        else {
+        } else {
             /*
              * 这里不是数字，解析出错
              */

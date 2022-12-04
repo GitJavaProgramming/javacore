@@ -8,9 +8,9 @@ import java.nio.charset.StandardCharsets;
 
 public class SocketHandler implements Runnable {
 
-    private Socket socket;
+    private final Socket socket;
 
-    private Thread t;
+    private final Thread t;
 
     public SocketHandler(Socket socket) {
         this.socket = socket;

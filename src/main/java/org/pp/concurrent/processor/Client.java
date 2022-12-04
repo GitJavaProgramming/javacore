@@ -14,7 +14,7 @@ import java.util.stream.Stream;
  */
 public class Client {
 
-    private static int nThreads = 10;
+    private static final int nThreads = 10;
 
     public static void main(String[] args) {
 //        testThread();

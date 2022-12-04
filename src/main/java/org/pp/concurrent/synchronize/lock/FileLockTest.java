@@ -47,10 +47,7 @@ public class FileLockTest {
             try (FileInputStream in = new FileInputStream(lockFile)) {
                 String content = new String(in.readAllBytes());
                 String pid = String.valueOf(getPid());
-                if (!pid.equals(content)) {
-                    return true;
-                }
-                return false;
+                return !pid.equals(content);
             } catch (IOException e) {
                 System.out.println("读文件异常：" + e.getMessage());
             }

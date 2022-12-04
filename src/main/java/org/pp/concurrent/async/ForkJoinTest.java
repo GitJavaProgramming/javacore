@@ -14,7 +14,7 @@ public class ForkJoinTest {
 }
 
 class IntSum extends RecursiveTask<Long> {
-    private int count;
+    private final int count;
 
     public IntSum(int count) {
         this.count = count;

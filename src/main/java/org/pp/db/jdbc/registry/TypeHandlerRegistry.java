@@ -1,9 +1,9 @@
 package org.pp.db.jdbc.registry;
 
-import org.pp.db.jdbc.typehandler.TypeHandler;
 import org.pp.db.jdbc.typehandler.DateTypeHandler;
 import org.pp.db.jdbc.typehandler.IntegerTypeHandler;
 import org.pp.db.jdbc.typehandler.StringTypeHandler;
+import org.pp.db.jdbc.typehandler.TypeHandler;
 
 import java.sql.Timestamp;
 import java.util.HashMap;

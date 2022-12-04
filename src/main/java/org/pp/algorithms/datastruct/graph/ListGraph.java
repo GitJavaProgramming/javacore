@@ -8,7 +8,7 @@ import java.util.stream.IntStream;
  */
 public class ListGraph extends AbstractGraph {
 
-    private Edge[] edges;
+    private final Edge[] edges;
 
     public ListGraph(int numVertex) {
         this.numVertex = numVertex;

@@ -12,8 +12,8 @@ import java.util.Arrays;
  * @date 2022/11/30 8:43
  * ************厚德载物************
  **/
-public class ObjectStack<T> implements IStack<T>{
-    private int capacity = 5;
+public class ObjectStack<T> implements IStack<T> {
+    private final int capacity = 5;
     private int top;
     private T[] arr;
 

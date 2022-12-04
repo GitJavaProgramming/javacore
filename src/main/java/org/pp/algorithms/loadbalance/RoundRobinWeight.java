@@ -12,7 +12,7 @@ import java.util.Map;
  **/
 public class RoundRobinWeight {
     // 初始化存储每个节点的权重容器
-    private static Map<String, Weight> weightMap = new HashMap<>();
+    private static final Map<String, Weight> weightMap = new HashMap<>();
 
     // 计算总权重值，只需要计算一次，因此放在静态代码块中执行
     private static int weightTotal = 0;

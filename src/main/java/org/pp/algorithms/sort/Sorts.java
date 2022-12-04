@@ -162,6 +162,6 @@ public final class Sorts {
     }
 
     public enum SortType {
-        SELECT, INSERTION, QUICK, MERGE;
+        SELECT, INSERTION, QUICK, MERGE
     }
 }

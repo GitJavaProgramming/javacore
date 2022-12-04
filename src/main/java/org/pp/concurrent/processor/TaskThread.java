@@ -53,10 +53,8 @@ public class TaskThread<K extends Comparable<K>> extends Thread implements Compa
     public boolean expire() {
         long currTime = System.currentTimeMillis();
         long keepAliveTime = currTime - startTime;
-        if ((keepAliveTime / 1000) > keepAlive && job.isDone()) { // 3秒空闲就关闭任务线程
-            return true;
-        }
-        return false;
+        // 3秒空闲就关闭任务线程
+        return (keepAliveTime / 1000) > keepAlive && job.isDone();
     }
 
     public long getStartTime() {

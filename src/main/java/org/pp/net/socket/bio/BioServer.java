@@ -3,12 +3,11 @@ package org.pp.net.socket.bio;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.nio.charset.StandardCharsets;
 
 public class BioServer {
     public static void main(String[] args) throws IOException {
         ServerSocket server = new ServerSocket(9090);
-        while(true) {
+        while (true) {
             Socket socket = server.accept();
             System.out.println(socket.getRemoteSocketAddress() + "连接来到");
 

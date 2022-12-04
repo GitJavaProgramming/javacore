@@ -8,17 +8,17 @@ public class FutureTask<T> implements Future<T> {
 
     @Override
     public T get() throws InterruptedException {
-        synchronized(LOCK) {
-            while(!isDone) {
+        synchronized (LOCK) {
+            while (!isDone) {
                 LOCK.wait();
             }
             return result;
         }
     }
 
-    protected  void finish(T result) {
+    protected void finish(T result) {
         synchronized (LOCK) {
-            if(isDone) {
+            if (isDone) {
                 return;
             }
             this.result = result;

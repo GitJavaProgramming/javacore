@@ -14,7 +14,7 @@ public class TestWaitNotify {
 
     class T1 implements Runnable {
 
-        private Shared shared;
+        private final Shared shared;
 
         public T1(Shared shared) {
             this.shared = shared;
@@ -30,7 +30,7 @@ public class TestWaitNotify {
 
     class T2 implements Runnable {
 
-        private Shared shared;
+        private final Shared shared;
 
         public T2(Shared shared) {
             this.shared = shared;

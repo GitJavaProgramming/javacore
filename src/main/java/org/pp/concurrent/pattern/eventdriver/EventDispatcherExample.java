@@ -37,6 +37,7 @@ public class EventDispatcherExample {
             System.out.println("结果：" + message.getResult());
         }
     }
+
     static class InputEventHandler implements Channel<InputEvent> {
         private final SyncEventDispatcher dispatcher;
 

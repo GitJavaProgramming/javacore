@@ -15,8 +15,8 @@ public class DefaultInvocationHandler<T> implements InvocationHandler {
 
     private final Map<Class, Set<MethodWrapper>> methodCache = new ConcurrentHashMap<>();
     private final Executor executor;
-    private Class<T> interfaceClass;
-    private List<Interceptor> interceptors = new ArrayList<>();
+    private final Class<T> interfaceClass;
+    private final List<Interceptor> interceptors = new ArrayList<>();
 
     public DefaultInvocationHandler(Executor executor, Class<T> interfaceClass) {
         this.executor = executor;

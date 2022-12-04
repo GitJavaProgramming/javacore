@@ -4,7 +4,7 @@ import java.util.Iterator;
 
 public class ListIter<E> implements Iterator<E> {
 
-    private SingleLinkedList<E> linkedList;
+    private final SingleLinkedList<E> linkedList;
     private int index = 0; // 从头结点开始迭代
     private SingleLinkedList.Node<E> next; // Node必须静态，否则无法外部访问
 

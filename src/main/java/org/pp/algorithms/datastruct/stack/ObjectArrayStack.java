@@ -10,7 +10,7 @@ import java.util.Arrays;
  * ************厚德载物************
  **/
 public class ObjectArrayStack<E> implements IStack<E> {
-    private int capacity = 16;
+    private final int capacity = 16;
     private int top;
     private Object[] arr = new Object[capacity];
 

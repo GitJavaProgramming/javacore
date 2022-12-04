@@ -3,7 +3,7 @@ package org.pp.concurrent.pattern.eventdriver;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public abstract class AsyncChannel implements Channel<Event>{
+public abstract class AsyncChannel implements Channel<Event> {
     /**
      * 使用线程池的方式处理Message
      */
@@ -12,20 +12,22 @@ public abstract class AsyncChannel implements Channel<Event>{
     /**
      * 使用系统自定义的executorService
      */
-    public AsyncChannel(){
+    public AsyncChannel() {
         this(Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 2));
     }
 
     /**
      * 用户自定义的executorService
+     *
      * @param executorService
      */
-    public AsyncChannel(ExecutorService executorService){
+    public AsyncChannel(ExecutorService executorService) {
         this.executorService = executorService;
     }
 
     /**
      * 重写dispatch方法，并且使用final修饰，防止子类重写
+     *
      * @param message
      */
     @Override
@@ -41,8 +43,8 @@ public abstract class AsyncChannel implements Channel<Event>{
     /**
      * 关闭线程池
      */
-    void stop(){
-        if (null != executorService && !executorService.isShutdown()){
+    void stop() {
+        if (null != executorService && !executorService.isShutdown()) {
             executorService.shutdown();
         }
     }

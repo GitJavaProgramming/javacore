@@ -1,7 +1,7 @@
 package org.pp.net.socket;
 
 public class ServerOptions {
-    private volatile boolean stop = false;
+    private final boolean stop = false;
 
     public boolean canStop() {
         return stop;

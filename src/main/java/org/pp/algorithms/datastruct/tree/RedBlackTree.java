@@ -278,8 +278,8 @@ public class RedBlackTree<K extends Comparable<K>, E> implements SearchTree<K, E
     }
 
     final class Node<K, E> {
-        private K key;
-        private E elem;
+        private final K key;
+        private final E elem;
         private Node<K, E> parent;
         private Node<K, E> left;
         private Node<K, E> right;

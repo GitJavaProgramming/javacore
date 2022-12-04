@@ -37,7 +37,7 @@ public class LockFairnessTest {
 
     class Resource implements Runnable {
 
-        private ReentrantLock2 lock;
+        private final ReentrantLock2 lock;
 
         public Resource(ReentrantLock2 lock) {
             this.lock = lock;

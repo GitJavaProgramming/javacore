@@ -8,7 +8,7 @@ package org.pp.complier.simple;
  * ************厚德载物************
  **/
 public class BasicParser {
-    private Lexer lexer;
+    private final Lexer lexer;
     private boolean isLegalStatement = true;
 
     public BasicParser(Lexer lexer) {

@@ -6,7 +6,7 @@ public class EventBus implements Bus {
     // 用于维护 Subscriber 的注册表
     private final Registry registry = new Registry();
     // Event Bus 的名字
-    private String busName;
+    private final String busName;
 
     // 默认的 Event Bus 的名字
     private final static String DEFAULT_BUS_NAME = "default";

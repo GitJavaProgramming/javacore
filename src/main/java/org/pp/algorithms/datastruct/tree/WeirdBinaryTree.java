@@ -117,7 +117,7 @@ public class WeirdBinaryTree<E extends Comparable<E>> implements BinaryTree<E>, 
     }
 
     public boolean contains(E e) {
-        return getNode(e) == null ? false : true;
+        return getNode(e) != null;
     }
 
     /**

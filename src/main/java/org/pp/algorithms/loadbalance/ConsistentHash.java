@@ -12,7 +12,7 @@ import java.util.TreeMap;
  **/
 public class ConsistentHash {
     // 使用有序的红黑树结构，用于实现哈希环结构
-    private static TreeMap<Integer,String> virtualNodes = new TreeMap<>();
+    private static final TreeMap<Integer, String> virtualNodes = new TreeMap<>();
     // 每个真实节点的虚拟节点数量
     private static final int VIRTUAL_NODES = 160;
 
@@ -23,7 +23,7 @@ public class ConsistentHash {
             // 将真实节点的IP映射到哈希环上
             virtualNodes.put(getHashCode(serverIP), serverIP);
             // 根据设定的虚拟节点数量进行虚拟节点映射
-            for (int i = 0; i < VIRTUAL_NODES; i++){
+            for (int i = 0; i < VIRTUAL_NODES; i++) {
                 // 计算出一个虚拟节点的哈希值（只要不同即可）
                 int hash = getHashCode(serverIP + i);
                 // 将虚拟节点添加到哈希环结构上
@@ -33,7 +33,7 @@ public class ConsistentHash {
     }
 
 
-    public static String getServer(String IP){
+    public static String getServer(String IP) {
         int hashCode = getHashCode(IP);
         // 得到大于该Hash值的子红黑树
         SortedMap<Integer, String> sortedMap = virtualNodes.tailMap(hashCode);
@@ -48,9 +48,9 @@ public class ConsistentHash {
 
 
     // 哈希方法：用于计算一个IP的哈希值
-    public static int getHashCode(String IP){
+    public static int getHashCode(String IP) {
         final int p = 1904390101;
-        int hash = (int)1901102097L;
+        int hash = (int) 1901102097L;
         for (int i = 0; i < IP.length(); i++)
             hash = (hash ^ IP.charAt(i)) * p;
         hash += hash << 13;
@@ -67,15 +67,15 @@ public class ConsistentHash {
     }
 
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         // 用for循环模拟五个不同的IP访问
-        for (int i = 1; i <= 5; i++){
-            System.out.println("第"+ i + "个请求：" + getServer("192.168.12.13"+i));
+        for (int i = 1; i <= 5; i++) {
+            System.out.println("第" + i + "个请求：" + getServer("192.168.12.13" + i));
         }
         System.out.println("-----------------------------");
         // 用for循环模拟三个相同的IP访问
-        for (int i = 1; i <= 3; i++){
-            System.out.println("第"+ i + "个请求：" + getServer("192.168.12.131"));
+        for (int i = 1; i <= 3; i++) {
+            System.out.println("第" + i + "个请求：" + getServer("192.168.12.131"));
         }
     }
 }

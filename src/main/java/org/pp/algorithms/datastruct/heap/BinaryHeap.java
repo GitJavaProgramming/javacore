@@ -11,7 +11,7 @@ public class BinaryHeap<E> implements Container<E> {
 
     private static final int DEFAULT_SIZE = 10;
     private int size;
-    private Comparable<E>[] array;
+    private final Comparable<E>[] array;
 
     public BinaryHeap() {
         this.array = new Comparable[DEFAULT_SIZE];

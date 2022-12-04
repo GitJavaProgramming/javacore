@@ -1,10 +1,10 @@
 package org.pp.net.httpserver;
 
-import java.io.*;
-import java.nio.channels.*;
+import java.io.IOException;
+import java.nio.channels.SelectionKey;
 
 public interface Handler {
-    public void handle(SelectionKey key) throws IOException;
+    void handle(SelectionKey key) throws IOException;
 }
 
 

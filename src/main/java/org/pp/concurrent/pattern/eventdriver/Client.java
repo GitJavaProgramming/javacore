@@ -5,6 +5,6 @@ public class Client {
         SyncEventDispatcher dispatcher = new SyncEventDispatcher();
         dispatcher.registerChannel(EventDispatcherExample.InputEvent.class, new EventDispatcherExample.InputEventHandler(dispatcher));
         dispatcher.registerChannel(EventDispatcherExample.ResultEvent.class, new EventDispatcherExample.ResultEventHandler());
-        dispatcher.dispatch(new EventDispatcherExample.InputEvent(1,2));
+        dispatcher.dispatch(new EventDispatcherExample.InputEvent(1, 2));
     }
 }

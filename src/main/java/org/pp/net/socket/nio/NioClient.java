@@ -58,7 +58,7 @@ public class NioClient {
 
     public static void handleConnect(SelectionKey key, Selector selector) {
         SocketChannel socketChannel = (SocketChannel) key.channel();
-        if(socketChannel.isConnectionPending()) {
+        if (socketChannel.isConnectionPending()) {
             try {
                 socketChannel.finishConnect();
             } catch (IOException e) {

@@ -6,7 +6,7 @@ package org.pp.concurrent.synchronize;
  */
 public class WaitNotify {
 
-    private static Resource resource = new Resource();
+    private static final Resource resource = new Resource();
 
     public static void main(String[] args) throws InterruptedException {
         WaitNotify waitNotify = new WaitNotify();
@@ -63,7 +63,7 @@ public class WaitNotify {
 
     static class A extends Thread {
 
-        private String name;
+        private final String name;
 
         A(String name) {
             this.name = name;
@@ -91,7 +91,7 @@ public class WaitNotify {
 
     static class B extends Thread {
 
-        private String name;
+        private final String name;
 
         B(String name) {
             this.name = name;
@@ -118,7 +118,7 @@ public class WaitNotify {
 
     static class C extends Thread {
 
-        private String name;
+        private final String name;
         private volatile boolean done = false;
 
         C(String name) {

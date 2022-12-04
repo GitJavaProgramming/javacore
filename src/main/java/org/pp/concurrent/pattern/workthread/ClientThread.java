@@ -15,7 +15,7 @@ public class ClientThread extends Thread {
     @Override
     public void run() {
         int i = 0;
-        while(true) {
+        while (true) {
             Request request = new Request(getName(), i);
             channel.putRequest(request);
             try {

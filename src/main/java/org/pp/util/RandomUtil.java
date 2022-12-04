@@ -20,10 +20,10 @@ public class RandomUtil {
      */
     public static int random(int min, int max, List<Integer> splitList, List<Integer> percentList) {
         class Range {
-            private int min;
-            private int max;
-            private int percentLower;
-            private int percentUpper;
+            private final int min;
+            private final int max;
+            private final int percentLower;
+            private final int percentUpper;
 
             public Range(int min, int max, int percentLower, int percentUpper) {
                 this.min = min;

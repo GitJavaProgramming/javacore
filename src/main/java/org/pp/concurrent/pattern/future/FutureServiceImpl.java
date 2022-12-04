@@ -2,7 +2,7 @@ package org.pp.concurrent.pattern.future;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class FutureServiceImpl<IN,OUT> implements FutureService<IN,OUT> {
+public class FutureServiceImpl<IN, OUT> implements FutureService<IN, OUT> {
     private final static String FUTURE_THREAD_PREFIX = "FUTURE-";
     private final AtomicInteger nextCounter = new AtomicInteger(0);
 
@@ -13,7 +13,7 @@ public class FutureServiceImpl<IN,OUT> implements FutureService<IN,OUT> {
     @Override
     public Future<?> submit(Runnable runnable) {
         final FutureTask<Void> futuretask = new FutureTask<>();
-        new Thread(()-> {
+        new Thread(() -> {
             runnable.run();
             futuretask.finish(null);
         }, getNextName()).start();
@@ -23,7 +23,7 @@ public class FutureServiceImpl<IN,OUT> implements FutureService<IN,OUT> {
     @Override
     public Future<OUT> submit(Task<IN, OUT> task, IN input) {
         final FutureTask<OUT> futuretask = new FutureTask<>();
-        new Thread(()-> {
+        new Thread(() -> {
             OUT result = task.get(input);
             futuretask.finish(result);
         }, getNextName()).start();
@@ -33,10 +33,10 @@ public class FutureServiceImpl<IN,OUT> implements FutureService<IN,OUT> {
     @Override
     public Future<OUT> submit(Task<IN, OUT> task, IN input, Callback<OUT> callback) {
         final FutureTask<OUT> futuretask = new FutureTask<>();
-        new Thread(()-> {
+        new Thread(() -> {
             OUT result = task.get(input);
             futuretask.finish(result);
-            if(callback != null) {
+            if (callback != null) {
                 callback.call(result);
             }
         }, getNextName()).start();

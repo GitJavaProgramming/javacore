@@ -3,7 +3,7 @@ package org.pp.game.sokoban;
 public class Map {
     private int manX = 0;
     private int manY = 0;
-    private byte map[][];
+    private final byte[][] map;
     private int grade;
 
     public Map(int manX, int manY, byte[][] map) {
@@ -12,8 +12,8 @@ public class Map {
         int row = map.length;
         int column = map[0].length;
         byte[][] temp = new byte[row][column];
-        for(int i =0; i < row; i++) {
-            for(int j = 0; j < column; j++) {
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < column; j++) {
                 temp[i][j] = map[i][j];
             }
         }

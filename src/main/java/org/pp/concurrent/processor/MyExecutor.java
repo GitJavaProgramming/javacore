@@ -12,12 +12,12 @@ public class MyExecutor {
 
     private final Thread monitorThread;
     private final Monitor monitor = new Monitor();
-    private int reserveThreadSize = 0;
-    private int maxThreadSize;
-    private ConcurrentLinkedQueue<TaskThread<Integer>> threadList = new ConcurrentLinkedQueue<>();
+    private final int reserveThreadSize = 0;
+    private final int maxThreadSize;
+    private final ConcurrentLinkedQueue<TaskThread<Integer>> threadList = new ConcurrentLinkedQueue<>();
     //    private LinkedList<TaskThread<Integer>> expireThreadList = new LinkedList<>();
 //    private RejectedExecutionHandler rejectedExecutionHandler;
-    private AtomicInteger exeCount = new AtomicInteger();
+    private final AtomicInteger exeCount = new AtomicInteger();
 
     public MyExecutor(int maxThreadSize) {
         this.maxThreadSize = maxThreadSize;

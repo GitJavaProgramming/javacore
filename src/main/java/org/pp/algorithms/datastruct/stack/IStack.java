@@ -9,7 +9,10 @@ package org.pp.algorithms.datastruct.stack;
  **/
 public interface IStack<E> {
     void push(E elem);
+
     E pop();
+
     void clear();
+
     void print();
 }

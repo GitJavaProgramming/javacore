@@ -12,9 +12,9 @@ public class SocketServer {
 
     static class Server implements Runnable {
 
-        private String name;
+        private final String name;
 
-        private Thread t;
+        private final Thread t;
 
         private boolean stop = false;
 

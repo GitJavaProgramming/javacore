@@ -27,11 +27,7 @@ public class Lexer {
     private String current = "";
 
     private boolean isAlnum(char c) {
-        if (Character.isAlphabetic(c) || Character.isDigit(c)) {
-            return true;
-        }
-
-        return false;
+        return Character.isAlphabetic(c) || Character.isDigit(c);
     }
 
     private int lex() {

@@ -47,9 +47,9 @@ public class IOStreamTest {
         channel.read(buffer);
         System.out.println("===============");
         buffer.flip();
-        while(buffer.hasRemaining()) {
+        while (buffer.hasRemaining()) {
             byte b = buffer.get();
-            System.out.print((char)b);
+            System.out.print((char) b);
         }
         System.out.println("\n===============");
         buffer.flip();
@@ -320,7 +320,7 @@ public class IOStreamTest {
             System.out.println(stringCharsetEntry.getKey() + "==>" + stringCharsetEntry.getValue().displayName());
         }
         // 中文字符 utf8编码时占3个字节 gbk时占2个字节
-        System.out.println("中".getBytes("UTF-8").length);
+        System.out.println("中".getBytes(StandardCharsets.UTF_8).length);
         System.out.println("中".getBytes("GBK").length);
     }
 

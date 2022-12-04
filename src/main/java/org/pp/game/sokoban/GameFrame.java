@@ -23,9 +23,9 @@ public class GameFrame extends JFrame implements ActionListener, MouseListener, 
     private int mapRow = 0, mapColumn = 0;//地图的行列数
     private int width = 0, height = 0;//屏幕大小
     private boolean acceptKey = true;
-    private Image pic[] = null;//图片数组
+    private Image[] pic = null;//图片数组
     private byte[][] map = null;//地图数组
-    private ArrayList list = new ArrayList();//用于撤回操作
+    private final ArrayList list = new ArrayList();//用于撤回操作
 
     /**
      * 构造方法
@@ -317,7 +317,7 @@ public class GameFrame extends JFrame implements ActionListener, MouseListener, 
         for (int i = 0; i < mapRow; i++) {
             for (int j = 0; j < mapColumn; j++) {
 //                if (map[i][j] != 0) {
-                    g.drawImage(pic[map[i][j]], leftX + j * 30, leftY + i * 30, 30, 30, this);
+                g.drawImage(pic[map[i][j]], leftX + j * 30, leftY + i * 30, 30, 30, this);
 //                }
             }
         }

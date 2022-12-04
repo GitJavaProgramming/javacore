@@ -7,7 +7,7 @@ public abstract class AbstractThreadPool implements IThreadPoolService {
 
     private final BlockingQueue<Runnable> blockingQueue;
     private final int corePoolThreadSize;
-    private AtomicInteger ctl = new AtomicInteger(); // 当前工作线程数
+    private final AtomicInteger ctl = new AtomicInteger(); // 当前工作线程数
 
     public AbstractThreadPool(int corePoolThreadSize, BlockingQueue<Runnable> blockingQueue) {
         this.blockingQueue = blockingQueue;

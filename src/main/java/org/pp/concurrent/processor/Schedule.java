@@ -22,7 +22,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * 0-z
  * 0-A  ?  1-A  ?
  * 1-a  ?  2-a  ?
- *
+ * <p>
  * Java中线程都是抢占式的
  * 非抢占式调度 运行期间独占cpu 通过控制线程执行的顺序来模拟
  */
@@ -133,9 +133,9 @@ public class Schedule {
          * 资源 代表内存 -> 26 * 2
          */
         private static final char[] chars = "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz".toCharArray();
-        private static AtomicInteger ip = new AtomicInteger();
+        private static final AtomicInteger ip = new AtomicInteger();
         private static volatile boolean stop; // 控制所有的实例
-        private static AtomicInteger num = new AtomicInteger(2); // 最多打印几遍chars
+        private static final AtomicInteger num = new AtomicInteger(2); // 最多打印几遍chars
 
         private int inTime;
         private int count = 1; // 当前线程打印的字符数

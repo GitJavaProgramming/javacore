@@ -13,7 +13,7 @@ public class MatrixGraph extends AbstractGraph {
     /**
      * 抽象矩阵--图在其中
      */
-    private int[][] matrix;
+    private final int[][] matrix;
 
     /**
      * 是否有向，默认有向

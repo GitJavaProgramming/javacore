@@ -9,8 +9,8 @@ public class FiniteStateMachine {
     private int yynstate = FMS.STATE_FAILURE; //通过look ahead 字符得到的下一个状态
     private boolean yyanchor = false; //是否出现过接收状态
     private byte yylook = Input.EOF; //预读取字符
-    private Input input = new Input();
-    private TableFMS fms = new TableFMS();
+    private final Input input = new Input();
+    private final TableFMS fms = new TableFMS();
     private boolean endOfReads = false;
 
     public FiniteStateMachine() {

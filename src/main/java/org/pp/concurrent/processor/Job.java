@@ -73,7 +73,7 @@ public class Job {
     }
 
     private enum Status {
-        RESERVE, RUNNING, DONE;
+        RESERVE, RUNNING, DONE
     }
 
     interface PriorityRunnable<K extends Comparable<K>/*按K比较*/> extends Runnable, Comparable<PriorityRunnable<K>> {

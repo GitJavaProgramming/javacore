@@ -11,9 +11,9 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 public class ConditionTest {
     private static volatile boolean flag = true;
-    private Lock lock = new ReentrantLock();
-    private Condition condition = lock.newCondition();
-    private LinkedList<String> queue = new LinkedList<>();
+    private final Lock lock = new ReentrantLock();
+    private final Condition condition = lock.newCondition();
+    private final LinkedList<String> queue = new LinkedList<>();
 
     public void put(String e) throws InterruptedException {
         lock.lock();

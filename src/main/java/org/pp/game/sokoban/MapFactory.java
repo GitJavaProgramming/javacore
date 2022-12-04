@@ -1,7 +1,7 @@
 package org.pp.game.sokoban;
 
 public class MapFactory {
-    static byte map[][][] = {
+    static byte[][][] map = {
             {
                     {0, 0, 1, 1, 1, 0, 0, 0},
                     {0, 0, 1, 4, 1, 0, 0, 0},
@@ -27,7 +27,7 @@ public class MapFactory {
     static int count = map.length;
 
     public static byte[][] getMap(int grade) {
-        byte temp[][];
+        byte[][] temp;
         if (grade >= 0 && grade < count) {
             temp = map[grade];
         } else

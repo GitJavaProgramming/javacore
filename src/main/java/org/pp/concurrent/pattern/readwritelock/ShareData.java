@@ -13,7 +13,7 @@ public class ShareData {
 
     public ShareData(int length) {
         this.length = length;
-        for(int i = 0; i < length; i++) {
+        for (int i = 0; i < length; i++) {
             container.add(i, 'c');
         }
     }
@@ -22,7 +22,7 @@ public class ShareData {
         try {
             readLock.lock();
             char[] newBuffer = new char[length];
-            for(int i = 0; i < length; i++) {
+            for (int i = 0; i < length; i++) {
                 newBuffer[i] = container.get(i);
             }
             slowly();
@@ -33,9 +33,9 @@ public class ShareData {
     }
 
     public void write(char c) throws InterruptedException {
-        try{
+        try {
             writeLock.lock();
-            for(int i = 0; i < length; i++) {
+            for (int i = 0; i < length; i++) {
                 this.container.add(i, c);
             }
             slowly();
@@ -51,24 +51,6 @@ public class ShareData {
             e.printStackTrace();
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }
