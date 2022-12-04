@@ -2,7 +2,9 @@ package org.pp.lang.patterns.structural.bridge;
 
 public abstract class Abstraction implements Action {
 
-    /** 行为实现器，需要注入，见 NewConcreteAction */
+    /**
+     * 行为实现器，需要注入，见 NewConcreteAction
+     */
     protected Implementor implementor;
 
     @Override

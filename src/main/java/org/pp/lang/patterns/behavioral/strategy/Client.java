@@ -5,9 +5,9 @@ package org.pp.lang.patterns.behavioral.strategy;
  */
 public class Client {
     public static void main(String[] args) {
-        IStrategy strategy =  new Fetch360Strategy();
+        IStrategy strategy = new Fetch360Strategy();
         fetch(strategy);
-        strategy =  new FetchSSCStrategy();
+        strategy = new FetchSSCStrategy();
         fetch(strategy);
     }
 

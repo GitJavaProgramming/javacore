@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class PContainer extends Component {
 
-    private java.util.List<Component> componentList;
+    private final java.util.List<Component> componentList;
 
     public PContainer() throws HeadlessException {
         componentList = new ArrayList<>();

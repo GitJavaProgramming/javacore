@@ -17,6 +17,7 @@ public class ThreadProxy extends Thread implements Runnable {
     private void preProcess() {
         System.out.println("preProcess");
     }
+
     private void postProcess() {
         System.out.println("postProcess");
     }
