@@ -2,6 +2,11 @@ package org.pp.algorithms.datastruct;
 
 import java.util.Iterator;
 
+/**
+ * 单链表
+ * 在尾部插入元素，只有一个头指针
+ * @param <E>
+ */
 public class SingleLinkedList<E> extends AbstractFiniteSequence<E> implements Container<E> {
     private final int capacity = 16; // 指定最大容量
     //    private int size;
