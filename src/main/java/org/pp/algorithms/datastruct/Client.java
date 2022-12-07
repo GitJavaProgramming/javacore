@@ -19,8 +19,8 @@ public class Client {
 //        new Client().testArray(); // 数组
 //        new Client().testHash(); // 哈希表
 //        new Client().testBinaryTree(); // 二叉树  非递归遍历呢？
-//        new Client().testTreeMap(); // 红黑树  链式存储结构
-        new Client().testPriorityQueue(); // 优先队列 顺序存储结构
+        new Client().testTreeMap(); // 红黑树  链式存储结构
+//        new Client().testPriorityQueue(); // 优先队列 顺序存储结构
 //        new Client().testBTree(); // B树 B+树 B*树
     }
 
