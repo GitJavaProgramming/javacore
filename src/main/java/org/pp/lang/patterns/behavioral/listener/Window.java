@@ -4,18 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Window {
-    private final List<EventListener> listeners;
+    private final List<ActionListener> listeners;
 
     public Window() {
         this.listeners = new ArrayList<>();
     }
 
-    public void addListener(EventListener listener) {
+    public void addListener(ActionListener listener) {
         listeners.add(listener);
     }
 
     public void fireAction(Event event) {
-        listeners.forEach(listener -> listener.process(event));
+        listeners.forEach(listener -> listener.actionPerformed(event));
     }
 
     @Override
