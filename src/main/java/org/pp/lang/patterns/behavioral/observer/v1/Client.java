@@ -1,4 +1,4 @@
-package org.pp.lang.patterns.behavioral.observer;
+package org.pp.lang.patterns.behavioral.observer.v1;
 
 import java.util.ArrayList;
 import java.util.Collections;

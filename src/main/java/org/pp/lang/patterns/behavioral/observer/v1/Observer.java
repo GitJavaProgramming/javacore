@@ -1,4 +1,4 @@
-package org.pp.lang.patterns.behavioral.observer;
+package org.pp.lang.patterns.behavioral.observer.v1;
 
 public class Observer {
 
